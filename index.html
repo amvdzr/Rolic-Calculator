@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lot Size Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FFFFFF;
+            --text-color: #1A1A1A;
+            --primary-color: #D4AF37; /* Light Gold */
+            --secondary-color: #B8860B; /* Dark Gold */
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --input-border: #D4AF37;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1A1A1A;
+            --text-color: #D4AF37;
+            --primary-color: #B8860B; /* Dark Gold */
+            --secondary-color: #D4AF37;
+            --container-bg: rgba(26, 26, 26, 0.95);
+            --input-border: #B8860B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1A1A1A, #2C2C2C);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            transition: background 0.3s ease;
+        }
+
+        .container {
+            background: var(--container-bg);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--container-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            color: var(--primary-color);
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            max-width: 350px; /* Increased logo size */
+            height: auto;
+            margin: 0 auto 10px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5rem; /* Reduced font size */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: var(--container-bg);
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #1A1A1A;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #riskAmount {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            display: none;
+        }
+
+        #result {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            animation: blink 1s infinite;
+            display: none;
+        }
+
+        .message {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-top: 15px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            padding-top: 15px;
+            border-top: 1px solid var(--input-border);
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.3rem; /* Reduced mobile font size */
+            }
+            
+            #riskAmount {
+                font-size: 1.2rem;
+            }
+            
+            #result {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/fkQ32nvC/Rolic-trade-Logo-removebg-1.png" 
+                 alt="Logo" 
+                 class="logo">
+        </div>
+        
+        <h1>Lot Size Calculator</h1>
+        
+        <div class="input-group">
+            <label>Account Size ($)</label>
+            <input type="number" id="accountSize" placeholder="Enter account balance">
+        </div>
+
+        <div class="input-group">
+            <label>Risk Percentage (%)</label>
+            <input type="number" id="riskPercent" placeholder="Enter risk percentage">
+        </div>
+
+        <div class="input-group">
+            <label>Stop Loss (Pips)</label>
+            <input type="number" id="stopLoss" placeholder="Enter stop loss">
+        </div>
+
+        <button onclick="calculateLotSize()">Calculate Lot Size</button>
+
+        <div id="riskAmount"></div>
+        <div id="result"></div>
+        <div class="message" id="message">Your Risk is now Managed! Good Luck with the Trade</div>
+
+        <div class="footer">
+            Prepared by Muhammad Ahmed
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            
+            if(currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if(savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+            }
+        });
+
+        function calculateLotSize() {
+            const accountSize = parseFloat(document.getElementById('accountSize').value);
+            const riskPercent = parseFloat(document.getElementById('riskPercent').value);
+            const stopLoss = parseFloat(document.getElementById('stopLoss').value);
+
+            if (!accountSize || !riskPercent || !stopLoss) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            const riskAmount = (accountSize * riskPercent) / 100;
+            const lotSize = (riskAmount / (stopLoss * 10)).toFixed(2);
+
+            const riskAmountElement = document.getElementById('riskAmount');
+            const resultElement = document.getElementById('result');
+            const messageElement = document.getElementById('message');
+
+            riskAmountElement.textContent = `Risk Amount: $${riskAmount.toFixed(2)}`;
+            resultElement.textContent = `${lotSize} Lot`;
+            
+            riskAmountElement.style.display = 'block';
+            resultElement.style.display = 'block';
+            messageElement.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
