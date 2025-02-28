@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lot Size Calculator</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #FFFFFF;
             --text-color: #1A1A1A;
-            --primary-color: #D4AF37; /* Light Gold */
-            --secondary-color: #B8860B; /* Dark Gold */
+            --primary-color: #D4AF37;
+            --secondary-color: #B8860B;
             --container-bg: rgba(255, 255, 255, 0.95);
             --input-border: #D4AF37;
         }
@@ -18,7 +18,7 @@
         [data-theme="dark"] {
             --bg-color: #1A1A1A;
             --text-color: #D4AF37;
-            --primary-color: #B8860B; /* Dark Gold */
+            --primary-color: #B8860B;
             --secondary-color: #D4AF37;
             --container-bg: rgba(26, 26, 26, 0.95);
             --input-border: #B8860B;
@@ -73,11 +73,16 @@
         .logo-container {
             text-align: center;
             margin-bottom: 15px;
+            width: 100%;
+            overflow: hidden;
+            padding: 0 15px;
         }
         
         .logo {
-            max-width: 350px; /* Increased logo size */
+            width: 100%;
+            max-width: 350px;
             height: auto;
+            display: block;
             margin: 0 auto 10px;
         }
 
@@ -85,7 +90,7 @@
             color: var(--primary-color);
             text-align: center;
             margin-bottom: 25px;
-            font-size: 1.5rem; /* Reduced font size */
+            font-size: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
@@ -172,11 +177,16 @@
 
         @media (max-width: 480px) {
             .container {
-                padding: 20px;
+                padding: 15px;
+            }
+            
+            .logo {
+                width: 90%;
+                max-width: 300px;
             }
             
             h1 {
-                font-size: 1.3rem; /* Reduced mobile font size */
+                font-size: 1.3rem;
             }
             
             #riskAmount {
